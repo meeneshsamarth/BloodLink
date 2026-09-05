@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BloodLink — Right Blood. Right Place. Right Time.</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- LOGIN -->
+    <section id="loginPage" class="login-page">
+      <div class="login-shell">
+        <div class="hero-copy">
+          <div class="brand brand-large">
+            <span class="brand-mark">+</span><span>Blood<span>Link</span></span>
+          </div>
+          <div class="eyebrow">EMERGENCY BLOOD COORDINATION</div>
+          <h1>Right Blood.<br /><span>Right Place.</span><br />Right Time.</h1>
+          <p>
+            A centralized platform connecting hospitals, blood banks and
+            verified donors for faster emergency blood coordination.
+          </p>
+          <div class="hero-points">
+            <span>✓ Simulated real-time inventory</span>
+            <span>✓ Demo matching engine</span>
+            <span>✓ Prototype notification service</span>
+          </div>
+        </div>
+
+        <div class="login-card glass">
+          <div class="demo-pill"><span></span> DEMO MODE</div>
+          <h2>Welcome to BloodLink</h2>
+          <p class="muted">Select a role to enter the prototype.</p>
+
+          <div class="role-grid" id="roleGrid">
+            <button class="role-card" data-role="hospital">
+              <span>🏥</span><strong>Hospital</strong
+              ><small>Request & coordinate</small>
+            </button>
+            <button class="role-card" data-role="bloodbank">
+              <span>🩸</span><strong>Blood Bank</strong
+              ><small>Manage inventory</small>
+            </button>
+            <button class="role-card" data-role="donor">
+              <span>👤</span><strong>Donor</strong
+              ><small>Availability profile</small>
+            </button>
+            <button class="role-card" data-role="admin">
+              <span>🛡</span><strong>Admin</strong
+              ><small>Network overview</small>
+            </button>
+          </div>
+
+          <form id="loginForm" class="login-form hidden">
+            <label
+              >Name / Organization<input
+                id="loginName"
+                required
+                placeholder="e.g. CityCare Hospital"
+            /></label>
+            <label
+              >Email / Phone<input
+                id="loginContact"
+                required
+                placeholder="demo@bloodlink.local"
+            /></label>
+            <button class="btn btn-primary btn-wide" type="submit">
+              Enter Demo Dashboard <span>→</span>
+            </button>
+            <button class="text-btn" type="button" id="changeRole">
+              ← Change role
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP -->
+    <section id="appPage" class="app-page hidden">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <span class="brand-mark">+</span><span>Blood<span>Link</span></span>
+        </div>
+        <div class="side-demo">● DEMO MODE</div>
+
+        <nav id="mainNav">
+          <button data-page="dashboard" class="nav-item active">
+            <span>⌂</span> Dashboard
+          </button>
+          <button data-page="emergency" class="nav-item">
+            <span>!</span> Emergency Request
+          </button>
+          <button data-page="inventory" class="nav-item">
+            <span>▦</span> Blood Inventory
+          </button>
+          <button data-page="matching" class="nav-item">
+            <span>⌁</span> Smart Matching
+          </button>
+          <button data-page="notifications" class="nav-item">
+            <span>◉</span> Notifications <b id="navNotif">3</b>
+          </button>
+          <button data-page="history" class="nav-item">
+            <span>↺</span> Request History
+          </button>
+          <button data-page="donors" class="nav-item admin-hospital-only">
+            <span>♙</span> Donor Network
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="support-card">
+            <span>●</span>
+            <div>
+              <strong>Prototype network</strong
+              ><small>All data is simulated</small>
+            </div>
+          </div>
+          <button class="nav-item logout" id="logoutBtn">
+            <span>↪</span> Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobileMenu">☰</button>
+          <div>
+            <div class="top-title" id="topTitle">Hospital Dashboard</div>
+            <div class="top-subtitle">
+              Saturday, September 5 · Demo environment
+            </div>
+          </div>
+          <div class="top-actions">
+            <button class="icon-btn" id="notifBtn" title="Notifications">
+              ◉<i></i>
+            </button>
+            <div class="profile">
+              <div class="avatar" id="profileAvatar">CH</div>
+              <div>
+                <strong id="profileName">CityCare</strong
+                ><small id="profileRole">Hospital</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="pageContent" class="page-content"></div>
+      </main>
+    </section>
+
+    <!-- EMERGENCY MODAL -->
+    <div class="modal-backdrop hidden" id="requestModal">
+      <div class="modal glass">
+        <button class="modal-close" data-close="requestModal">×</button>
+        <div class="section-kicker">EMERGENCY COORDINATION</div>
+        <h2>Emergency Blood Request</h2>
+        <p class="muted">
+          Create a simulated request and start the matching workflow.
+        </p>
+        <form id="requestForm">
+          <div class="form-grid">
+            <label
+              >Blood Group<select id="bloodGroup" required>
+                <option value="">Select blood group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select></label
+            >
+            <label
+              >Units Required<input
+                id="unitsRequired"
+                type="number"
+                min="1"
+                max="50"
+                value="2"
+                required
+            /></label>
+            <label
+              >Priority<select id="priority" required>
+                <option>Critical</option>
+                <option>Urgent</option>
+                <option>Normal</option>
+              </select></label
+            >
+            <label
+              >Hospital / Location<input
+                id="requestLocation"
+                value="CityCare Hospital, Central Zone"
+                required
+            /></label>
+          </div>
+          <label
+            >Additional Notes<textarea
+              id="requestNotes"
+              placeholder="Optional context for the demo..."
+            ></textarea>
+          </label>
+          <button class="btn btn-primary btn-wide" type="submit">
+            Find Blood <span>→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
